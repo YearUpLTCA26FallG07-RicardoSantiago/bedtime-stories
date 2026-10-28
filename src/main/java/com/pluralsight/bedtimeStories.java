@@ -7,12 +7,12 @@ import java.util.Scanner;
 
 
 public class bedtimeStories {
-    public static void main(String args[]) {
+    public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
         //store the stories
 
-        String[] stories = {"Goldilocks", "Hansel and Gretel", "Mary had a little lamb",};
+        String[] stories = {"goldilocks.txt", "hansel_and_gretel.txt", "mary_had_a_little_lamb.txt",};
 
         System.out.println("Stories avalable: ");
 
@@ -21,14 +21,28 @@ public class bedtimeStories {
         }
 
         // Menu selection
+        int choice = 0;
 
-        System.out.print("\nChoose a story (1-" + stories.length + "): ");
-        int choice = scanner.nextInt();
+        while (true) {
+            try {
+                System.out.print("\nChoose a story (1-" + stories.length + "): ");
+                choice = scanner.nextInt();
 
-        if(choice < 1 || choice > stories.length) {
-            System.out.println("Invalid input. Please try again");
-            return;
-        }
+                if (choice >= 1 && choice <= stories.length) {
+                    break;
+                }
+
+                System.out.println("Invalid input. Please try again");
+
+            } catch (Exception e) {
+                System.out.println("Please enter a number 1-3");
+                scanner.nextLine();
+
+            }
+            }
+
+
+
 
         //File selection
 
@@ -36,9 +50,14 @@ public class bedtimeStories {
 
         System.out.println("Showing: " + selectedstory);
 
+        System.out.println("Current Directory: "
+                + System.getProperty("user.dir"));
 
         try {
-            BufferedReader reader = new FileReader(selectedstory);
+            BufferedReader reader =
+                    new BufferedReader(
+                            new FileReader(selectedstory));
+
             String line;
             int lineNumber = 1;
 
@@ -48,16 +67,11 @@ public class bedtimeStories {
             }
 
             reader.close();
-        
 
-
+        } catch (Exception e) {
+            e.printStackTrace();
         }
 
-
-
-
-
-
-
-
-    }}
+        scanner.close();
+    }
+}
